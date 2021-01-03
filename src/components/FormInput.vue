@@ -1,5 +1,5 @@
 <template>
-  <form class="flex items-start flex-col" @submit.prevent="formSubmit">
+  <form @submit.prevent="formSubmit" data-testid="formBudget">
     <BaseInput
       typeInput="date"
       idInput="time"
@@ -21,8 +21,11 @@
       idInput="amount"
       v-model="budget.amount"
     />
-    <template v-if="budget.type == 'Income' || budget.type == null">
+    <template v-if="budget.type === 'Income'">
         <BaseButton title="Save" btnClass="bg-green-300 px-4 py-2 font-semibold focus:outline-none" />
+    </template>
+    <template v-else-if="budget.type === null">
+      <BaseButton title="Save" btnClass="bg-blue-300 px-4 py-2 font-semibold focus:outline-none" />
     </template>
     <template v-else>
         <BaseButton title="Save" btnClass="bg-red-300 px-4 py-2 font-semibold focus:outline-none" />
@@ -53,7 +56,14 @@ export default {
   },
   methods: {
     formSubmit() {
-      console.log(this.budget);
+      this.budget.amount = parseInt(this.budget.amount);
+      this.$emit('formData', this.budget)
+      this.budget = {
+        type: null,
+        details: null,
+        date: null,
+        amount: null
+      }
     }
   }
 };
