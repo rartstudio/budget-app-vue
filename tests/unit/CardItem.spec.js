@@ -27,6 +27,7 @@ describe("CardItem", () => {
   });
   it("accepting props from parent and display it to layout", () => {
     const value = {
+      id: '41294730-c376-4c59-b023-2d4e3bd9596f',
       type: "Income",
       details: "Freelancing",
       date: "12-12-2021",
@@ -47,4 +48,27 @@ describe("CardItem", () => {
     const btn = wrapper.find('[data-testid="itemButton"]');
     expect(btn.exists()).toBe(true);
   })
+
+  it('emitting type and id from value', async ()=> {
+    const data = {
+      id: '41294730-c376-4c59-b023-2d4e3bd9596f',
+      type : "Income"
+    }
+    wrapper.vm.$emit('idValue',data);
+
+    await wrapper.vm.$nextTick();
+
+    const formSubmitted = wrapper.emitted().idValue;
+    // console.log(formSubmitted);
+
+    //testing is input submitted is emitted or not
+    expect(formSubmitted).toBeTruthy();
+
+    //testing is input submitted has a length at least 1
+    expect(formSubmitted).toHaveLength(1);
+
+    //testing value we emitted with dummy
+    expect(formSubmitted[0][0]).toEqual(data);
+
+  });
 });

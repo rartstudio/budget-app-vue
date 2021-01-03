@@ -43,5 +43,27 @@ describe("CardList", () => {
         return accumulator + currentValue.amount;
       },initialValue);
       expect(sum).toEqual(wrapper.vm.sumOfValues);
-  })
+  });
+  it('emitting type and id from cardItem component', async ()=> {
+    const data = {
+      id: '41294730-c376-4c59-b023-2d4e3bd9596f',
+      type : "Income"
+    }
+    wrapper.vm.$emit('deleteData',data);
+
+    await wrapper.vm.$nextTick();
+
+    const formSubmitted = wrapper.emitted().deleteData;
+    // console.log(formSubmitted);
+
+    //testing is input submitted is emitted or not
+    expect(formSubmitted).toBeTruthy();
+
+    //testing is input submitted has a length at least 1
+    expect(formSubmitted).toHaveLength(1);
+
+    //testing value we emitted with dummy
+    expect(formSubmitted[0][0]).toEqual(data);
+
+  });
 });
