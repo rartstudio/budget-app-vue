@@ -2,7 +2,7 @@
   <div data-testid="cardList" class="mt-4">
     <h2 :class="[title === 'Incomes' ? 'text-green-500' : 'text-red-500','text-2xl']">{{ title }}</h2>
     <div class="mt-8 flex flex-col justify-start overflow-auto h-48">
-      <CardItem v-for="value in values" :key="value.id" :value="value" />
+      <CardItem v-for="value in values" :key="value.id" :value="value" @idValue="sendingId($event)"/>
     </div>
     <div class="mt-8">
       <h5 :class="[title === 'Incomes' ? 'text-green-500' : 'text-red-500','text-xl text-left']">
@@ -41,6 +41,9 @@ export default {
     convert(data) {
       let amount = data.toString();
       return this.currencyConverter(amount);
+    },
+    sendingId(data){
+      this.$emit('deleteData',data);
     }
   }
 };

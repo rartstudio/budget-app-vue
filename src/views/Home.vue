@@ -7,10 +7,10 @@
     <div class="w-full flex flex-col">
       <div class="flex">
         <div class="w-1/2 ml-2">
-          <CardList :values="incomes" title="Incomes" />
+          <CardList :values="incomes" title="Incomes" @deleteData="deletingData($event)"/>
         </div>
         <div class="w-1/2 ml-2">
-          <CardList :values="expenses" title="Expenses" />
+          <CardList :values="expenses" title="Expenses" @deleteData="deletingData($event)"/>
         </div>
       </div>
       <div class="mt-16 mx-auto">
@@ -60,6 +60,17 @@ export default {
       data.id = uuidv4();
       if (data.type === "Income") return this.incomes.push(data);
       if (data.type === "Expense") return this.expenses.push(data);
+    },
+    deletingData(data){
+      console.log(data);
+      if(data.type === 'Expense'){
+        let newExpense = this.expenses.filter(el => el.id !== data.id);
+        return this.expenses = newExpense;
+      }
+      if(data.type === 'Income'){
+        let newIncome = this.incomes.filter(el => el.id !== data.id);
+        return this.incomes = newIncome;
+      }
     }
   }
 };
