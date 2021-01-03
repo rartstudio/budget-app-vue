@@ -42,4 +42,9 @@ describe("CardItem", () => {
     expect(newItemAmount).toEqual(value.amount);
     expect(itemDetails).toEqual(value.details);
   });
+
+  it('add Button to enable delete feature', ()=> {
+    const btn = wrapper.find('[data-testid="itemButton"]');
+    expect(btn.exists()).toBe(true);
+  })
 });
